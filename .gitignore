@@ -1,4 +1,9 @@
 # Byte-compiled / optimized / DLL files
+
+**/.DS_Store
+**/.vscode
+minio/mc/config/**
+
 __pycache__/
 *.py[cod]
 *$py.class

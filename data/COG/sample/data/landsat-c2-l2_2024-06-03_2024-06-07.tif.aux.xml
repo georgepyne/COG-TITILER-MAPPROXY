@@ -1,0 +1,15 @@
+<PAMDataset>
+  <Metadata>
+    <MDI key="OVR_RESAMPLING_ALG">NEAREST</MDI>
+  </Metadata>
+  <PAMRasterBand band="1">
+    <Metadata>
+      <MDI key="STATISTICS_APPROXIMATE">YES</MDI>
+      <MDI key="STATISTICS_MAXIMUM">723</MDI>
+      <MDI key="STATISTICS_MEAN">641.55592671097</MDI>
+      <MDI key="STATISTICS_MINIMUM">243</MDI>
+      <MDI key="STATISTICS_STDDEV">58.857831233774</MDI>
+      <MDI key="STATISTICS_VALID_PERCENT">47.65</MDI>
+    </Metadata>
+  </PAMRasterBand>
+</PAMDataset>

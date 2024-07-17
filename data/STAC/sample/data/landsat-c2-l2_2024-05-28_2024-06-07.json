@@ -1,0 +1,55 @@
+{"stac_json":{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "stac_version": "1.0.0",
+            "id": "landsat-c2-l2_2024-05-28_2024-06-07",
+            "properties": {
+                "proj:shape": {
+                    "0": 3465,
+                    "1": 6644
+                },
+                "proj:epsg": 32610,
+                "eo:agg_cloud_cover": 40.165,
+                "datetime": "2024-06-07T18:15:18.117831Z"
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            426375.0,
+                            5175105.0
+                        ],
+                        [
+                            426375.0,
+                            5279055.0
+                        ],
+                        [
+                            625695.0,
+                            5279055.0
+                        ],
+                        [
+                            625695.0,
+                            5175105.0
+                        ],
+                        [
+                            426375.0,
+                            5175105.0
+                        ]
+                    ]
+                ]
+            },
+            "links": [],
+            "assets": {},
+            "bbox": [
+                426375.0,
+                5175105.0,
+                625695.0,
+                5279055.0
+            ],
+            "stac_extensions": []
+        }
+    ]
+}}
