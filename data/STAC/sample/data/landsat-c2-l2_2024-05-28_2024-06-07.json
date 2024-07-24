@@ -1,4 +1,4 @@
-{"stac_json":{
+{
     "type": "FeatureCollection",
     "features": [
         {
@@ -52,4 +52,4 @@
             "stac_extensions": []
         }
     ]
-}}
+}
