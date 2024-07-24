@@ -19,19 +19,29 @@ services:
       timeout: 1s
       retries: 3
 
-#  titiler:
-#    image: ghcr.io/developmentseed/titiler:latest
-#    depends_on:
-#      minio:
-#        condition: service_completed_successfully
+  minio-sample-loader:
+    image: minio/mc:RELEASE.2024-06-12T14-34-03Z
+    entrypoint: /bin/bash /entrypoint.sh
+    environment:
+      <<: *minio-environment
+    volumes:
+      - "./docker/minio/mc/entrypoint.sh:/entrypoint.sh:ro"
+      - "./data/STAC/sample/data/:/stac/sample:ro"
+      - "./data/COG/sample/data/:/cog/sample:ro"
+    depends_on:
+      minio:
+        condition: service_healthy
+    command: mc cp --recursive /stac/sample minio/stac && mc cp --recursive /cog/sample minio/cog
 
+  titiler:
+    image: ghcr.io/developmentseed/titiler:latest
+    ports:
+      - "8000:8000"
+    environment:
+      - PORT=8000
+      - WORKERS_PER_CORE=1
 
-#  mapproxy:
-#    image: ghcr.io/mapproxy/mapproxy/mapproxy:2.1.1-dev
-#    depends_on:
-#      titiler:
-#        condition: service_completed_successfully
-#    ports:
-#        - "8080:8080"
-#    command:
-#        docker run --rm --name "mapproxy" -p 8080:8080 -t -v `pwd`/mapproxyconfig:/mapproxy/config ghcr.io/mapproxy/mapproxy/mapproxy:2.1.1-dev
+  mapproxy:
+    image: ghcr.io/mapproxy/mapproxy/mapproxy:2.1.1-dev
+    ports:
+        - "8080:8080"
