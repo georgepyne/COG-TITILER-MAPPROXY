@@ -1,5 +1,7 @@
 # Byte-compiled / optimized / DLL files
 
+.idea
+
 **/.DS_Store
 **/.vscode
 minio/mc/config/**
