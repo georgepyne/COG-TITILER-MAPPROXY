@@ -6,11 +6,10 @@ sources:
   titiler:
     type: tile
     url: titiler:8000/cog/tiles/WebMercatorQuad/%(x)s/%(y)s/%(z)s@4x.png?url=s3://cog/sample/data/landsat-c2-l2_2024-05-28_2024-06-07.tif&bidx=1&expression=b1/b2
-#      655,1431,12
 layers:
-  name: titiler-layer
-  title: Titiler layer
-  sources: [titiler-cache]
+  - name: titiler-layer
+    title: Titiler layer
+    sources: [titiler-cache]
 caches:
   titiler-cache:
     grids: [GLOBAL_MERCATOR]
