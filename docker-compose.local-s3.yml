@@ -3,6 +3,7 @@ x-minio-environment: &minio-environment
   AWS_ACCESS_KEY_ID: miniouser
   MINIO_ROOT_PASSWORD: miniopassword
   AWS_SECRET_ACCESS_KEY: miniopassword
+  MINIO_HTTP_TRACE: /dev/stdout
 
 services:
   minio:
@@ -12,6 +13,7 @@ services:
       <<: *minio-environment
     ports:
       - "9000:9000"
+      - "9001:9001"
       - "9001:9001"
     healthcheck:
       test: curl --fail http://localhost:9001
@@ -38,10 +40,36 @@ services:
     ports:
       - "8000:8000"
     environment:
+      - AWS_ACCESS_KEY_ID=miniouser
+      - AWS_SECRET_ACCESS_KEY=miniopassword
+      - AWS_S3_ENDPOINT=minio:9000
       - PORT=8000
-      - WORKERS_PER_CORE=1
+      - WORKERS_PER_CORE=3
+      - LOG_LEVEL=debug
+      - TIMEOUT=240
+      - FORWARDED_ALLOW_IPS="*"
+      - CPL_TMPDIR=/tmp
+      - GDAL_CACHEMAX=75%
+      - GDAL_INGESTED_BYTES_AT_OPEN=32768
+      - GDAL_DISABLE_READDIR_ON_OPEN=EMPTY_DIR
+      - GDAL_HTTP_MERGE_CONSECUTIVE_RANGES=YES
+      - GDAL_HTTP_MULTIPLEX=YES
+      - GDAL_HTTP_VERSION=2
+      - PYTHONWARNINGS=ignore
+      - VSI_CACHE=TRUE
+      - VSI_CACHE_SIZE=536870912
+      - TITILER_API_DISABLE_STAC=FALSE
+      - TITILER_API_DISABLE_MOSAIC=FALSE
+      - TITILER_API_DISABLE_COG=FALSE
+      - TITILER_API_CORS_ORIGIN=*
+      - TITILER_API_CACHECONTROL=public, max-age=3600
+      - TITILER_API_DEBUG=TRUE
+#    command: pip install boto3; titiler.application.main
+#    entrypoint: /bin/sh -c
 
   mapproxy:
     image: ghcr.io/mapproxy/mapproxy/mapproxy:2.1.1-dev
+    volumes:
+      - "./docker/titiler/mapproxy.yaml:/mapproxy/config/mapproxy.yaml:rw"
     ports:
         - "8080:8080"
