@@ -16,4 +16,11 @@ caches:
     sources: [titiler]
     format: image/png
     request_format: image/png
+    cache:
+#      type: file
+      type: redis
+      default_ttl: 600
+      host: redis
+      port: 6379
+      password: guiyguwqgdilxkajxkha73qa
 

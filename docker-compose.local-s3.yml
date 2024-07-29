@@ -36,6 +36,9 @@ services:
     command: mc cp --recursive /stac/sample minio/stac ; mc cp --recursive /cog/sample minio/cog
 
   titiler:
+    build:
+      dockerfile: docker/titiler/Dockerfile
+      context: .
     image: ghcr.io/developmentseed/titiler:latest
     ports:
       - "8000:8000"
@@ -64,12 +67,24 @@ services:
       - TITILER_API_CORS_ORIGIN=*
       - TITILER_API_CACHECONTROL=public, max-age=3600
       - TITILER_API_DEBUG=TRUE
-#    command: pip install boto3; titiler.application.main
-#    entrypoint: /bin/sh -c
+
+  redis:
+    image: redis:7-alpine
+    restart: always
+    ports:
+      - '6379:6379'
+    command: redis-server --save 20 1 --loglevel verbose --requirepass guiyguwqgdilxkajxkha73qa
+#    volumes:
+#        - cache:/data
 
   mapproxy:
+    build:
+      dockerfile: docker/mapproxy/Dockerfile
+      context: .
     image: ghcr.io/mapproxy/mapproxy/mapproxy:2.1.1-dev
+#    command: ./app/entrypoint.sh
     volumes:
       - "./docker/titiler/mapproxy.yaml:/mapproxy/config/mapproxy.yaml:rw"
     ports:
         - "8080:8080"
+
